@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Camera, 
@@ -103,7 +105,18 @@ export default function App() {
     return () => stopCamera();
   }, []);
 
-  const handleFormSubmit = () => {
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    try {
+      await fetch("https://formsubmit.co/ajax/darleneamondi1@gmail.com", {
+        method: "POST",
+        body: formData
+      });
+    } catch (err) {
+      console.log("Form submit error:", err);
+    }
     setStep('success');
   };
 
@@ -453,8 +466,6 @@ export default function App() {
 
             {/* FORM SUBMIT ENDPOINT */}
             <form 
-              action="https://formsubmit.co/darleneamondi1@gmail.com" 
-              method="POST" 
               onSubmit={handleFormSubmit}
               className="space-y-4 pt-4 border-t border-stone-200 text-left"
             >
